@@ -21,10 +21,14 @@ class Tag(models.Model):
 class Post(models.Model):
 
     created_time = models.DateTimeField()
-
+    views = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title
+
+    def increase_views(self):
+        self.views += 1
+        self.save(update_fields=['views'])
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={'pk': self.pk})
